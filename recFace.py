@@ -1,6 +1,5 @@
 import cv2
 import os
-
 cv2path = os.path.dirname(cv2.__file__)
 
 def find(name, path):
