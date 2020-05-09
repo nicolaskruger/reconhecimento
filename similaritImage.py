@@ -148,8 +148,8 @@ def sift_sim(path_a, path_b):
 
 
 if __name__ == '__main__':
-  img_a = 'a.jpg'
-  img_b = 'b.jpg'
+  img_a = 'p8.png'
+  img_b = 'p9.jpeg'
   # get the similarity values
   structural_sim = structural_sim(img_a, img_b)
   pixel_sim = pixel_sim(img_a, img_b)
