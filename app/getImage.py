@@ -1,10 +1,11 @@
 import cv2
-
+import os
+import pyscreenshot as ImageGrab
+import cv2
+import numpy as np
 def getImageTeste():
-    return cv2.imread("./../data/imageTeste.jpg")
+    return cv2.imread("./../data/imageTeste01.jpg")
+def getCapturaTela():
+    return np.array(ImageGrab.grab().convert('RGB'))
 def getImage():
-    return getImageTeste()
-img =getImage()
-cv2.imshow("img",img)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+    return getCapturaTela()
