@@ -1,5 +1,5 @@
-haarcascade_frontalface_alt2.xml
-haarcascade_fullbody.xml
-haarcascade_lowerbody.xml
 haarcascade_upperbody.xml
+haarcascade_frontalface_alt2.xml
+haarcascade_lowerbody.xml
+haarcascade_fullbody.xml
 haarcascade_profileface.xml
