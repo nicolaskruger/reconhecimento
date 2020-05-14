@@ -32,13 +32,10 @@ def tipe0():
     
     img = getImage()
     img = format(img)
-    t1 = time.time()
     cv2.imshow("img",img)
-    t1 = time.time() - t1
-    print(t1)
 def tipe1():
     img = getImage()
-    B,img = procImg.procP(img,2)
+    B,img = procImg.procP(img,1)
     op.setB(B)
     img = format(img)
     img = u.showAll(img)
@@ -65,14 +62,14 @@ def tipe4():
     cv2.imshow("img",img)
 def tipe5():
     img = getImage()
-    B,img = procImg.procNotRender(img,3)
+    B,img = procImg.procNotRender(img,1)
     op.setB(B)
     #img = format(img)
     #img = u.showAll(img)
     cv2.imshow("img",img)
 def tipe6():
     img = getImage()
-    B,img = procImg.procP(img,6,5)
+    B,img = procImg.procP(img,3)
     img= format(img)
     cv2.imshow("img",img)
 def set0():
@@ -99,13 +96,13 @@ def set3():
     u.changeColor(0,u.green())
     op.setB(False)
 def set4():
-    print("tipe3\ncaptura todos e opera")
+    print("tipe4\ncaptura todos e opera")
     global curNum
     curNum = 4
     u.changeColor(0,u.green())
     op.setB(False)
 def set5():
-    print("tipe3\ncaptura 3 melhores todos e opera")
+    print("tipe5\ncaptura 1 melhores todos e opera")
     global curNum
     curNum = 5
     u.changeColor(0,u.green())
@@ -134,9 +131,13 @@ switcher = {
     }
 key = cv2.waitKey(1) & 0xFF
 while(not key == ord('q')):
+    t1 = time.time()
     key = cv2.waitKey(1) & 0xFF
     curNum = getNum(key)
     switcher.get(curNum)()
+    t1 = time.time() - t1
+    print(chr(27) + "[2J")
+    print(1/t1)
 op.setA(False)
 op.join()
 cv2.destroyAllWindows()

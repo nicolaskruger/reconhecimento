@@ -1,5 +1,6 @@
 import cv2
 import os
+import time
 cv2path = os.path.dirname(cv2.__file__)
 
 def find(name, path):
@@ -21,8 +22,10 @@ while(not cv2.waitKey(20) & 0xFF == ord('q')):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
         # TODO: Classificar
+    t1 = time.time()
     faces = clf.detectMultiScale(gray)
-
+    t1 = time.time()-t1
+    print(t1)
         # TODO: Desenhar retangulo
     for x, y, w, h in faces:
         cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0))   

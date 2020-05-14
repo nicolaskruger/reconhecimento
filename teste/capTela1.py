@@ -16,7 +16,7 @@ with mss.mss() as sct:
         img = numpy.array(sct.grab(monitor))
 
         # Display the picture
-        cv2.imshow("OpenCV/Numpy normal", img)
+        cv2.imshow("OpenCV/Numpy normal", img) 
 
         # Display the picture in grayscale
         # cv2.imshow('OpenCV/Numpy grayscale',

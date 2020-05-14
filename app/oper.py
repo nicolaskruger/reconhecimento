@@ -11,6 +11,7 @@ class Oper(threading.Thread):
         self.cont = 0
         self.a = True
         self.b = False
+        self.cont = 0
     def getLock(self,func):
         lock.acquire()
         A = func()
@@ -41,6 +42,9 @@ class Oper(threading.Thread):
     def run(self):
         while self.getA():
             if self.getB():
+                self.cont =3
+            if self.cont != 0:
+                self.cont -= 1
                 self.mouse.click(Button.left,3)
             time.sleep(0.2)
 

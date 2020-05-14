@@ -1,23 +1,19 @@
+import time
+
 import cv2
-import os
-import pyscreenshot as ImageGrab
-import numpy as np
+import mss
+import numpy
+monitor = {"top": 0, "left": 0, "width": 1024, "height": 768}
 def getImageTeste():
     return cv2.imread("./../data/imageTeste01.jpg")
 def getCapturaTela():
-    img= np.array(ImageGrab.grab())
-    img= cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
-    #img= cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    #img = cv2.equalizeHist(img)
-    #h, w = img.shape[:2]
-    #scale = 0.5
-    # nH = int(h*scale)
-    # nW = int(w*scale)
-    #size = 100
-    #x = int(w/2)-int(size/2)
-    #y = int(h/2)-int(size/2)
-    
-    #cv2.rectangle(img, (x,y) ,(x+ size,y+ size), (0, 255, 0))
-    return img#[y:y+nH, x:x+nW]
+    with mss.mss() as sct:
+    #img= np.array(ImageGrab.grab())
+    #img= cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+        
+        img = numpy.array(sct.grab(monitor))
+        height, width = img.shape[:2]
+        img = cv2.resize(img,(int(width/2.7), int(height/2.7)), interpolation = cv2.INTER_CUBIC) 
+        return img#[y:y+nH, x:x+nW]
 def getImage():
     return getCapturaTela()

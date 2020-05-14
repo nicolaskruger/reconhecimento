@@ -1,5 +1,6 @@
 import cv2
 import os
+import time
 import threading
 from procTrhead import prThread
 from getImage import getImage
@@ -65,7 +66,6 @@ class Proc:
     def proc(self,img,func,n,m=0):
         n=n%(len(self.lOfLinks)+1)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        gray = cv2.equalizeHist(gray)
         trh = []
         for i in range(m,n):
             pos = self.dim[self.lOfLinks[i]]

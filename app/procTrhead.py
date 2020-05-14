@@ -19,7 +19,7 @@ class prThread (threading.Thread):
     def getFaces(self):
         return self.face
     def coliding(self,x0,y0,x,y,w,h,img):
-        side = 100
+        side = 50
         x0 -= int(side/2)
         y0 -= int(side/2)
         w0 = x0+side
