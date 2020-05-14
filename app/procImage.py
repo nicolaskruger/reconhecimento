@@ -22,12 +22,14 @@ class Proc:
     def __init__(self):
         self.func_names()
         #print(self.lOfLinks)
+        self.pFundo = cv2.imread("./../data/p11.png")
         self.dim = {
-            "haarcascade_frontalface_alt2.xml": [-1/2,-1/5,2,8,0],
+            "haarcascade_frontalface_alt2.xml": [-1,-1/5,3,8,0],
             "haarcascade_fullbody.xml": [0,0,1,1,0],
             "haarcascade_lowerbody.xml": [0,-2.3,1,3.1,0],
             "haarcascade_upperbody.xml": [0,0,1,3,0],
-            "haarcascade_profileface.xml": [-1/2,-1/5,2,8,0],
+            "haarcascade_profileface.xml": [-1,-1/5,3,8,0],
+            "haarcascade_russian_plate_number.xml": [0,0,1,1],
         }
         self.total = 0
         self.getCascadeClassifier()
@@ -60,27 +62,43 @@ class Proc:
             if self.dim[self.lOfLinks[i]][4] != 0:
                 st+=str(self.dim[self.lOfLinks[i]][4]/self.total)
         print(st)
-    def procTeste(self,img):
-        h, w = img.shape[:2]
-        centerX = int(w/2)
-        centerY = int(h/2)
-        B = False
+    def proc(self,img,func,n,m=0):
+        n=n%(len(self.lOfLinks)+1)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        gray = cv2.equalizeHist(gray)
         trh = []
-        for i in range(len(self.cfl)):
+        for i in range(m,n):
             pos = self.dim[self.lOfLinks[i]]
             tr =prThread(gray[:],self.cfl[i],pos[0],pos[1],pos[2],pos[3])
             tr.start()
             trh.append(tr)
         for tr in trh:
             tr.join()
-        
+        return func(trh,img)
+    def proc_teste(self,trh,img):
+        B = False
         for tr in trh:
-           tr.drawAll(img)
+           if tr.drawAll(img):
+               B=True
         self.calcPercente(trh)
         return B,img
-         
-
+    def procTeste(self,img):
+        return self.proc(img,self.proc_teste,5)
+    def proc_p(self,trh,img):
+        B=False
+        for tr in trh:
+            if tr.drawAll(img):
+               B=True
+        return B,img
+    def procP(self,img,n,m=0):
+        return self.proc(img,self.proc_p,n,m)
+    def proc_not_render(self,trh,img):
+        for tr in trh:
+            if tr.checkAll(img):
+                return True,self.pFundo
+        return False,self.pFundo
+    def procNotRender(self,img,n):
+        return self.proc(img,self.proc_not_render,n)
 # proc = Proc() 
 # img = getImage()
 # img = proc.procTeste(img)
