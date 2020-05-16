@@ -24,7 +24,16 @@ class Proc:
         self.func_names()
         #print(self.lOfLinks)
         self.pFundo = cv2.imread("./../data/p11.png")
-        self.dim = {
+        
+        self.deafDim = {
+            "haarcascade_frontalface_alt2.xml": [0,0,1,1,0],
+            "haarcascade_fullbody.xml": [0,0,1,1,0],
+            "haarcascade_lowerbody.xml": [0,0,1,1,0],
+            "haarcascade_upperbody.xml": [0,0,1,1,0],
+            "haarcascade_profileface.xml": [0,0,1,1,0],
+            "haarcascade_russian_plate_number.xml": [0,0,1,1],
+        }
+        self.reDim = {
             "haarcascade_frontalface_alt2.xml": [-1,-1/5,3,8,0],
             "haarcascade_fullbody.xml": [0,0,1,1,0],
             "haarcascade_lowerbody.xml": [0,-2.3,1,3.1,0],
@@ -32,9 +41,21 @@ class Proc:
             "haarcascade_profileface.xml": [-1,-1/5,3,8,0],
             "haarcascade_russian_plate_number.xml": [0,0,1,1],
         }
+        self.dim = self.reDim
+        self.state = "redim"
         self.total = 0
         self.getCascadeClassifier()
-
+    def setDeafDim(self):
+        self.state ="deafdim"
+        self.dim = self.deafDim
+    def setReDim(self):
+        self.state ="redim"
+        self.dim = self.reDim
+    def toogleDim(self):
+        if self.dim == self.deafDim:
+            self.setReDim()
+        else:
+            self.setDeafDim()
     def func_names(self):
         f = open("./../data/allxmlNames.txt","r")
         txt = f.readline()

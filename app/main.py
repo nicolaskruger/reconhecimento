@@ -11,133 +11,118 @@ op = Oper()
 u =UI(2)
 curNum=10
 op.start()
+text = ""
 def getNum(key):
     if key == ord('u'):
-        return 10
+        encr()
     elif key == ord('i'):
-        return 11
+        decr()
     elif key == ord('o'):
-        return 12
+        pTogle()
     elif key == ord('p'):
-        return 13
+        oTogle()
     elif key == ord('j'):
-        return 14
+        dimTogle()
     elif key == ord('k'):
         return 15
     elif key == ord('n'):
         return 16
     else:
         return curNum
-def tipe0():
+
+
+mx = 5
+mn = 1
+cur = 5
+def decr():
+    global mx 
+    global cur
+    global mn
+ 
+    if(cur>mn):
+        cur-=1
+def encr():
+    global mx 
+    global cur
+    global mn
     
-    img = getImage()
-    img = format(img)
-    cv2.imshow("img",img)
-def tipe1():
-    img = getImage()
-    B,img = procImg.procP(img,1)
-    op.setB(B)
-    img = format(img)
-    img = u.showAll(img)
-    cv2.imshow("img",img)
-def tipe2():
-    img = getImage()
-    B,img = procImg.procTeste(img)
-    img = format(img)
-    img = u.showAll(img)
-    cv2.imshow("img",img)
-def tipe3():
-    img = getImage()
-    B,img = procImg.procP(img,5)
-    op.setB(B)
-    img = format(img)
-    img = u.showAll(img)
-    cv2.imshow("img",img)
-def tipe4():
-    img = getImage()
-    B,img = procImg.procNotRender(img,5)
-    op.setB(B)
-    #img = format(img)
-    #img = u.showAll(img)
-    cv2.imshow("img",img)
-def tipe5():
-    img = getImage()
-    B,img = procImg.procNotRender(img,1)
-    op.setB(B)
-    #img = format(img)
-    #img = u.showAll(img)
-    cv2.imshow("img",img)
-def tipe6():
-    img = getImage()
-    B,img = procImg.procP(img,3)
-    img= format(img)
-    cv2.imshow("img",img)
-def set0():
-    print("tipe0\nsomente a camera")
-    global curNum
-    curNum = 0
-    op.setB(False)
-def set1():
-    print("tipe1\ncaptura 3 melhores, renderiza e opera")
-    global curNum
-    curNum = 1
-    u.changeColor(0,u.red())
-    op.setB(False)
-def set2():
-    print("tipe2\ncaptura todos melhores , renderiza")
-    global curNum
-    curNum = 2
-    u.changeColor(0,u.green())
-    op.setB(False)
-def set3():
-    print("tipe3\ncaptura todos melhores , renderiza e opera")
-    global curNum
-    curNum = 3
-    u.changeColor(0,u.green())
-    op.setB(False)
-def set4():
-    print("tipe4\ncaptura todos e opera")
-    global curNum
-    curNum = 4
-    u.changeColor(0,u.green())
-    op.setB(False)
-def set5():
-    print("tipe5\ncaptura 1 melhores todos e opera")
-    global curNum
-    curNum = 5
-    u.changeColor(0,u.green())
-    op.setB(False)
-def set6():
-    print("tipe6\nreconhecimento de caracteres, render")
-    global curNum
-    curNum = 6
-    u.changeColor(0,u.green())
-    op.setB(False)
-switcher = {
-        0: tipe0,
-        1: tipe1,
-        2: tipe2,
-        3: tipe3,
-        4: tipe4,
-        5: tipe5,
-        6: tipe6,
-        10: set0,
-        11: set1,
-        12: set2,
-        13: set3,
-        14: set4,
-        15: set5,
-        16: set6,
-    }
+    if(cur<mx):
+        cur+=1
+def dimTogle():
+    procImg.toogleDim()
+def gImg():
+    global text
+    text+=" "
+    text+=procImg.state
+    return getImage()
+gFunc = gImg
+def gImage():
+    return gFunc()
+
+def pImg00(img):
+    global text
+    text += " 0"
+    return False,img
+def pImg01(img):
+    global text
+    text += " "
+    text+=str(cur)
+    return procImg.procP(img,cur)
+pFunc = pImg01
+def pTogle():
+    global pFunc
+    if pFunc == pImg00:
+        pFunc = pImg01
+    else:
+        pFunc = pImg00
+def pImage(img):
+    return pFunc(img)
+
+def oImgOper(B):
+    global text
+    text +=" Oper"
+    op.set_b(B)
+def oImgNoper(B):
+    global text
+    text +=" Noper"
+    op.set_b(False)
+oFunc = oImgNoper
+def oTogle():
+    global oFunc
+    if oFunc == oImgNoper:
+        oFunc = oImgOper
+    else:
+        oFunc = oImgNoper
+def oImage(B):
+    oFunc(B)
+def fImg0(img):
+    return format(img)
+fFunc = fImg0
+def fImage(img):
+    return fFunc(img)
+
+
+def uImg(img):
+    u.txt = text
+    u.showText(img)
+uFunc = uImg
+def uImage(img):
+    return uFunc(img)
+
 key = cv2.waitKey(1) & 0xFF
 while(not key == ord('q')):
     t1 = time.time()
     key = cv2.waitKey(1) & 0xFF
     curNum = getNum(key)
-    switcher.get(curNum)()
+    #switcher.get(curNum)()
+    img = gImage()
+    B,img = pImage(img)
+    oImage(B)
+    img = fImage(img)
+    uImage(img)
+    cv2.imshow("img",img)
     t1 = time.time() - t1
-    print(chr(27) + "[2J")
-    print(1/t1)
+    text = str(round(1/t1,2))
 op.setA(False)
 op.join()
 cv2.destroyAllWindows()
