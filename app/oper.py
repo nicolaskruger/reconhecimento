@@ -42,7 +42,7 @@ class Oper(threading.Thread):
     def run(self):
         while self.getA():
             if self.getB():
-                self.cont =3
+                self.cont = 3
             if self.cont != 0:
                 self.cont -= 1
                 self.mouse.click(Button.left,3)

@@ -36,7 +36,7 @@ class Proc:
         self.reDim = {
             "haarcascade_frontalface_alt2.xml": [-1,-1/5,3,8,0],
             "haarcascade_fullbody.xml": [0,0,1,1,0],
-            "haarcascade_lowerbody.xml": [0,-2.3,1,3.1,0],
+            "haarcascade_lowerbody.xml": [0,-0.65,1,1.65,0],
             "haarcascade_upperbody.xml": [0,0,1,3,0],
             "haarcascade_profileface.xml": [-1,-1/5,3,8,0],
             "haarcascade_russian_plate_number.xml": [0,0,1,1],

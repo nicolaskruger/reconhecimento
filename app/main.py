@@ -24,7 +24,7 @@ def getNum(key):
     elif key == ord('j'):
         dimTogle()
     elif key == ord('k'):
-        return 15
+        gTogle()
     elif key == ord('n'):
         return 16
     else:
@@ -50,12 +50,26 @@ def encr():
         cur+=1
 def dimTogle():
     procImg.toogleDim()
-def gImg():
+def gImg0():
     global text
     text+=" "
     text+=procImg.state
     return getImage()
-gFunc = gImg
+def gImg1():
+    global text
+    text+=" "
+    text+=procImg.state
+    img = cv2.imread("./../data/imageTeste05.jpg")
+    height, width = img.shape[:2]
+    img = cv2.resize(img,(int(width/2), int(height/2)), interpolation = cv2.INTER_CUBIC)
+    return img
+gFunc = gImg0
+def gTogle():
+    global gFunc
+    if gFunc == gImg0:
+        gFunc =gImg1
+    else:
+        gFunc = gImg0
 def gImage():
     return gFunc()
 
